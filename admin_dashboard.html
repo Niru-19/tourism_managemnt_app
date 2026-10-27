@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Admin Dashboard - Tourism Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+    /* Force pointer events to work inside modals and prevent dead inputs */
+    .modal, .modal-dialog, .modal-content, .modal-body, input, select, textarea, button {
+        pointer-events: auto !important;
+    }
+    .modal-backdrop {
+        z-index: 1040 !important;
+    }
+    .modal {
+        z-index: 1050 !important;
+    }
+</style>
+</head>
+<body style="background: #f8f9fa;">
+
+    <nav class="navbar navbar-dark bg-dark px-4 py-3">
+        <span class="navbar-brand mb-0 h1">⚙️ Admin Control Panel</span>
+        <button id="admin-logout" class="btn btn-outline-light btn-sm">Logout</button>
+    </nav>
+
+    <div class="container my-4">
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item"><button class="nav-link active" id="btn-packages" onclick="switchTab('packages')">Manage Packages</button></li>
+            <li class="nav-item"><button class="nav-link" id="btn-users" onclick="switchTab('users')">Manage Users</button></li>
+        </ul>
+
+        <!-- PACKAGES SECTION -->
+        <div id="section-packages" class="admin-section">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Travel Packages Dataset</h3>
+                <button class="btn btn-success btn-sm" onclick="openPackageModal()">+ Add New Package</button>
+            </div>
+            <div class="card shadow-sm p-3 bg-white">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Destination</th>
+                                <th>Duration</th>
+                                <th>Accommodation</th>
+                                <th>Transport</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="packages-table-body">
+                            <tr><td colspan="6" class="text-center">Loading packages...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- USERS SECTION -->
+        <div id="section-users" class="admin-section" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Registered Users</h3>
+                <button class="btn btn-success btn-sm" onclick="openUserModal()">+ Add New User</button>
+            </div>
+            <div class="card shadow-sm p-3 bg-white">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>User ID</th>
+                                <th>Username</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Registered Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <tr><td colspan="6" class="text-center">Loading users...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PACKAGE MODAL -->
+    <div class="modal fade" id="packageModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="packageModalTitle">Add Package</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="packageForm">
+                        <input type="hidden" id="packageId">
+                        <div class="mb-3"><label class="form-label">Destination</label><input type="text" class="form-control" id="pkgDestination" required></div>
+                        <div class="mb-3"><label class="form-label">Duration (days)</label><input type="number" class="form-control" id="pkgDuration" required></div>
+                        <div class="mb-3"><label class="form-label">Accommodation Cost ($)</label><input type="number" step="0.01" class="form-control" id="pkgAccCost" required></div>
+                        <div class="mb-3"><label class="form-label">Transportation Cost ($)</label><input type="number" step="0.01" class="form-control" id="pkgTransCost" required></div>
+                        <button type="submit" class="btn btn-primary w-100">Save Package</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- USER MODAL -->
+    <div class="modal fade" id="userModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalTitle">Add User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm">
+                        <input type="hidden" id="userId">
+                        <div class="mb-3"><label class="form-label">Username</label><input type="text" class="form-control" id="usrUsername" required></div>
+                        <div class="mb-3"><label class="form-label">Full Name</label><input type="text" class="form-control" id="usrFullname"></div>
+                        <div class="mb-3"><label class="form-label">Email Address</label><input type="email" class="form-control" id="usrEmail" required></div>
+                        <div class="mb-3" id="passwordGroup"><label class="form-label">Password</label><input type="password" class="form-control" id="usrPassword" placeholder="Leave blank if editing"></div>
+                        <button type="submit" class="btn btn-primary w-100">Save User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap v5 Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        if (!JSON.parse(localStorage.getItem('adminUser'))) window.location.href = 'admin-login.html';
+
+        document.getElementById('admin-logout').addEventListener('click', () => {
+            localStorage.removeItem('adminUser');
+            window.location.href = 'index.html';
+        });
+
+        function switchTab(tab) {
+            document.getElementById('btn-packages').classList.toggle('active', tab === 'packages');
+            document.getElementById('btn-users').classList.toggle('active', tab === 'users');
+            document.getElementById('section-packages').style.display = tab === 'packages' ? 'block' : 'none';
+            document.getElementById('section-users').style.display = tab === 'users' ? 'block' : 'none';
+            if (tab === 'packages') loadPackages(); else loadUsers();
+        }
+
+        let packagesDataStore = {};
+        let usersDataStore = {};
+        
+        let packageModal, userModal;
+        document.addEventListener('DOMContentLoaded', () => {
+            packageModal = new bootstrap.Modal(document.getElementById('packageModal'));
+            userModal = new bootstrap.Modal(document.getElementById('userModal'));
+            loadPackages();
+
+            // Prevent backdrop freeze / page locking issues on modal close
+            ['packageModal', 'userModal'].forEach(modalId => {
+                document.getElementById(modalId).addEventListener('hidden.bs.modal', () => {
+                    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                    document.body.classList.remove('modal-open');
+                    document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
+                });
+            });
+        });
+
+        // --- PACKAGES ---
+        async function loadPackages() {
+            const res = await fetch('/api/admin/packages');
+            const packages = await res.json();
+            const tbody = document.getElementById('packages-table-body');
+            packagesDataStore = {};
+
+            if (!packages.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">No packages found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = packages.map(p => {
+                const id = p['Trip ID'];
+                packagesDataStore[String(id)] = p;
+                return `<tr>
+                    <td>${id}</td>
+                    <td><strong>${p.Destination || ''}</strong></td>
+                    <td>${p['Duration (days)'] || ''} days</td>
+                    <td>$${Number(p['Accommodation cost'] || 0).toFixed(2)}</td>
+                    <td>$${Number(p['Transportation cost'] || 0).toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm me-1" onclick="openPackageModal('${id}')">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deletePackage('${id}')">Delete</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function openPackageModal(id = null) {
+            const strId = String(id);
+            if (id && packagesDataStore[strId]) {
+                const p = packagesDataStore[strId];
+                document.getElementById('packageId').value = p['Trip ID'];
+                document.getElementById('pkgDestination').value = p.Destination || '';
+                document.getElementById('pkgDuration').value = p['Duration (days)'] || '';
+                document.getElementById('pkgAccCost').value = p['Accommodation cost'] || '';
+                document.getElementById('pkgTransCost').value = p['Transportation cost'] || '';
+                document.getElementById('packageModalTitle').textContent = 'Edit Package';
+            } else {
+                document.getElementById('packageId').value = '';
+                document.getElementById('packageForm').reset();
+                document.getElementById('packageModalTitle').textContent = 'Add New Package';
+            }
+            packageModal.show();
+        }
+
+        document.getElementById('packageForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('packageId').value;
+            const data = {
+                Destination: document.getElementById('pkgDestination').value,
+                duration: document.getElementById('pkgDuration').value,
+                accCost: document.getElementById('pkgAccCost').value,
+                transCost: document.getElementById('pkgTransCost').value
+            };
+            const res = await fetch(id ? `/api/admin/packages/${id}` : '/api/admin/packages', {
+                method: id ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) { 
+                packageModal.hide(); 
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                loadPackages(); 
+            } else {
+                alert('Error saving package.');
+            }
+        });
+
+        async function deletePackage(id) {
+            if (confirm('Delete this package?') && (await fetch(`/api/admin/packages/${id}`, { method: 'DELETE' })).ok) loadPackages();
+        }
+
+        // --- USERS ---
+        async function loadUsers() {
+            const res = await fetch('/api/admin/users');
+            const users = await res.json();
+            const tbody = document.getElementById('users-table-body');
+            usersDataStore = {};
+
+            if (!users.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">No users found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = users.map(u => {
+                usersDataStore[String(u.user_id)] = u;
+                return `<tr>
+                    <td>${u.user_id}</td>
+                    <td><strong>${u.username}</strong></td>
+                    <td>${u.full_name || 'N/A'}</td>
+                    <td>${u.email}</td>
+                    <td>${new Date(u.created_at).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm me-1" onclick="openUserModal('${u.user_id}')">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteUser('${u.user_id}')">Delete</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function openUserModal(id = null) {
+            const strId = String(id);
+            if (id && usersDataStore[strId]) {
+                const u = usersDataStore[strId];
+                document.getElementById('userId').value = u.user_id;
+                document.getElementById('usrUsername').value = u.username || '';
+                document.getElementById('usrFullname').value = u.full_name || '';
+                document.getElementById('usrEmail').value = u.email || '';
+                document.getElementById('userModalTitle').textContent = 'Edit User';
+                document.getElementById('passwordGroup').style.display = 'none';
+            } else {
+                document.getElementById('userId').value = '';
+                document.getElementById('userForm').reset();
+                document.getElementById('userModalTitle').textContent = 'Add New User';
+                document.getElementById('passwordGroup').style.display = 'block';
+            }
+            userModal.show();
+        }
+
+        document.getElementById('userForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('userId').value;
+            const data = {
+                username: document.getElementById('usrUsername').value,
+                full_name: document.getElementById('usrFullname').value,
+                email: document.getElementById('usrEmail').value,
+                password: document.getElementById('usrPassword').value
+            };
+            const res = await fetch(id ? `/api/admin/users/${id}` : '/api/admin/users', {
+                method: id ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) { 
+                userModal.hide(); 
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                loadUsers(); 
+            } else {
+                alert('Error saving user.');
+            }
+        });
+
+        async function deleteUser(id) {
+            if (confirm('Delete this user?') && (await fetch(`/api/admin/users/${id}`, { method: 'DELETE' })).ok) loadUsers();
+        }
+    </script>
+</body>
+</html>

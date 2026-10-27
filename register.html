@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Register - Tourism Package Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: #f8f9fa; display: flex; align-items: center; justify-content: center; height: 100vh;">
+
+    <div class="card shadow" style="width: 100%; max-width: 450px; padding: 30px; border-radius: 10px; background: #fff;">
+        <div class="text-center mb-4">
+            <h3>Create Account</h3>
+            <p class="text-muted">Join to start planning your trips</p>
+        </div>
+
+        <div id="error-alert" class="alert alert-danger d-none" role="alert"></div>
+        <div id="success-alert" class="alert alert-success d-none" role="alert"></div>
+
+        <form id="register-form">
+            <div class="form-group mb-3">
+                <label for="full_name">Full Name</label>
+                <input type="text" class="form-control" id="full_name" required placeholder="John Doe">
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" required placeholder="john_doe">
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" required placeholder="john@example.com">
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="password">Password (min 6 characters)</label>
+                <input type="password" class="form-control" id="password" required minlength="6" placeholder="Create a secure password">
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mb-3" style="padding: 10px;">Register</button>
+            
+            <div class="text-center">
+                <small class="text-muted">Already have an account? <a href="login.html">Login here</a></small><br>
+                <small class="mt-2 d-block"><a href="index.html">&larr; Back to Home</a></small>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const full_name = document.getElementById('full_name').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        const errorAlert = document.getElementById('error-alert');
+        const successAlert = document.getElementById('success-alert');
+
+        errorAlert.classList.add('d-none');
+        successAlert.classList.add('d-none');
+
+        try {
+            const response = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ full_name, username, email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                successAlert.textContent = 'Registration successful! Redirecting to login...';
+                successAlert.classList.remove('d-none');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } else {
+                errorAlert.textContent = data.error || 'Registration failed.';
+                errorAlert.classList.remove('d-none');
+            }
+        } catch (err) {
+            errorAlert.textContent = 'Server connection error. Please try again.';
+            errorAlert.classList.remove('d-none');
+        }
+    });
+</script></body>
+</html>

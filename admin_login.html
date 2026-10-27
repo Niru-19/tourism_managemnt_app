@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Admin Login - Tourism Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body style="background: #343a40; display: flex; align-items: center; justify-content: center; height: 100vh;">
+
+    <div class="card shadow" style="width: 100%; max-width: 400px; padding: 30px; border-radius: 10px; background: #fff;">
+        <div class="text-center mb-4">
+            <h3 class="text-dark">Admin Portal</h3>
+            <p class="text-muted">Sign in to manage system data</p>
+        </div>
+
+        <div id="error-alert" class="alert alert-danger d-none" role="alert"></div>
+
+        <form id="admin_login-form">
+            <div class="form-group mb-3">
+                <label for="username">Admin Username</label>
+                <input type="text" class="form-control" id="username" required placeholder="admin">
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" required placeholder="admin@123">
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100 mb-3" style="padding: 10px;">Login as Admin</button>
+            <div class="text-center">
+                <small><a href="index.html">&larr; Back to Public Site</a></small>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('admin_login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorAlert = document.getElementById('error-alert');
+
+            errorAlert.classList.add('d-none');
+
+            try {
+                const response = await fetch('/admin_login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('adminUser', JSON.stringify(data.admin));
+                    window.location.href = 'admin_dashboard.html';
+                } else {
+                    errorAlert.textContent = data.error || 'Invalid admin credentials.';
+                    errorAlert.classList.remove('d-none');
+                }
+            } catch (err) {
+                errorAlert.textContent = 'Server connection error. Please try again.';
+                errorAlert.classList.remove('d-none');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login - Tourism Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body style="background: #f8f9fa; display: flex; align-items: center; justify-content: center; height: 100vh;">
+
+    <div class="card shadow" style="width: 100%; max-width: 400px; padding: 30px; border-radius: 10px; background: #fff;">
+        <div class="text-center mb-4">
+            <h3 class="text-dark">Welcome Back</h3>
+            <p class="text-muted">Sign in to book travel packages</p>
+        </div>
+
+        <div id="error-alert" class="alert alert-danger d-none" role="alert"></div>
+
+        <form id="login-form">
+            <div class="form-group mb-3">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" required placeholder="Enter your email">
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" required placeholder="Enter your password">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mb-3" style="padding: 10px;">Login</button>
+            
+            <div class="text-center">
+                <small class="text-muted">Don't have an account? <a href="register.html">Register here</a></small><br>
+                <small class="mt-2 d-inline-block"><a href="packages.html">&larr; Back to Packages</a></small>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorAlert = document.getElementById('error-alert');
+
+            errorAlert.classList.add('d-none');
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Save user session
+                    localStorage.setItem('currentUser', JSON.stringify(data.user));
+                    // Redirect back to packages page
+                    window.location.href = 'packages.html';
+                } else {
+                    errorAlert.textContent = data.error || 'Invalid email or password.';
+                    errorAlert.classList.remove('d-none');
+                }
+            } catch (err) {
+                errorAlert.textContent = 'Server connection error. Please try again.';
+                errorAlert.classList.remove('d-none');
+            }
+        });
+    </script>
+</body>
+</html>

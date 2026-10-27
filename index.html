@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Tourism Package Management</title>
+    <meta name="description" content="Explore and manage tourism packages, bookings, and travel experiences.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/gijgo.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-area">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container-fluid p-0">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col-xl-5 col-lg-6">
+                            <div class="main-menu d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a class="active" href="index.html">Home</a></li>
+                                        <li><a href="packages.html">Packages</a></li>
+                                        <li><a href="destinations.html">Destinations</a></li>
+                                        <li><a href="about.html">About</a></li>
+                                        <li><a href="contact.html">Contact</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="logo-img">
+                                <a href="index.html">
+                                    <img src="img/logo.png" alt="Tourism Packages">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-4 d-none d-lg-block">
+                            <div class="book_room">
+                                <div class="socail_links">
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="book_btn d-none d-lg-block" style="display: flex; gap: 10px; align-items: center;">
+                    <!-- Shown when NOT logged in -->
+                    <div id="logged-out-view">
+                        <a href="login.html" class="boxed-btn3" style="padding: 10px 20px; font-size: 14px; margin-right: 5px;">Login</a>
+                        <a href="register.html" class="boxed-btn3" style="padding: 10px 20px; font-size: 14px; background: #28a745;">Register</a>
+                    </div>
+
+                    <!-- Shown when LOGGED IN -->
+                    <div id="logged-in-view" style="display: none; align-items: center; gap: 15px;">
+                        <a href="user_dashboard.html" style="color: #fff; font-weight: 500; text-decoration: underline;">My Dashboard</a>
+                        <span style="color: #fff; font-weight: 500;">Hi, <span id="nav-username"></span></span>
+                        <button id="logout-btn" style="background: transparent; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Logout</button>
+                    </div>
+                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="slider_area">
+        <div class="slider_active owl-carousel">
+            <div class="single_slider d-flex align-items-center justify-content-center slider_bg_1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="slider_text text-center">
+                                <h3>Discover Your Next Adventure</h3>
+                                <p>Find and book travel packages made for you</p>
+                                <a href="packages.html" class="boxed-btn3">Explore Packages</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single_slider d-flex align-items-center justify-content-center slider_bg_2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="slider_text text-center">
+                                <h3>Travel More, Worry Less</h3>
+                                <p>Plan memorable trips with convenient package booking</p>
+                                <a href="destinations.html" class="boxed-btn3">View Destinations</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-5">
+                    <div class="about_info">
+                        <div class="section_title mb-20px">
+                            <span>About Us</span>
+                            <h3>Plan Trips with Ease</h3>
+                        </div>
+                        <p>Browse travel packages, compare destinations, and manage your bookings in one place. Our system helps travelers find experiences that fit their interests and budget.</p>
+                        <a href="about.html" class="line-button">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7">
+                    <div class="about_thumb d-flex">
+                        <div class="img_1">
+                            <img src="img/about/about_1.png" alt="Scenic travel destination">
+                        </div>
+                        <div class="img_2">
+                            <img src="img/about/about_2.png" alt="Travel experience">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <div class="features_room">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="section_title text-center mb-100">
+                        <span>Find Your Trip</span>
+                        <h3>Popular Destinations</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rooms_here">
+            <div class="single_rooms">
+                <div class="room_thumb">
+                    <img src="img/rooms/1.png" alt="Coastal destination">
+                    <div class="room_heading d-flex justify-content-between align-items-center">
+                        <div class="room_heading_inner">
+                            <span>Explore packages</span>
+                            <h3>Coastal Getaways</h3>
+                        </div>
+                        <a href="destinations.html" class="line-button">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="single_rooms">
+                <div class="room_thumb">
+                    <img src="img/rooms/2.png" alt="Mountain destination">
+                    <div class="room_heading d-flex justify-content-between align-items-center">
+                        <div class="room_heading_inner">
+                            <span>Explore packages</span>
+                            <h3>Mountain Retreats</h3>
+                        </div>
+                        <a href="destinations.html" class="line-button">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="single_rooms">
+                <div class="room_thumb">
+                    <img src="img/rooms/3.png" alt="Cultural destination">
+                    <div class="room_heading d-flex justify-content-between align-items-center">
+                        <div class="room_heading_inner">
+                            <span>Explore packages</span>
+                            <h3>Cultural Journeys</h3>
+                        </div>
+                        <a href="destinations.html" class="line-button">Explore</a>
+                    </div>
+                </div>
+            </div>
+            <div class="single_rooms">
+                <div class="room_thumb">
+                    <img src="img/rooms/4.png" alt="Nature destination">
+                    <div class="room_heading d-flex justify-content-between align-items-center">
+                        <div class="room_heading_inner">
+                            <span>Explore packages</span>
+                            <h3>Nature Escapes</h3>
+                        </div>
+                        <a href="destinations.html" class="line-button">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="forQuery">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-10 offset-xl-1 col-md-12">
+                    <div class="Query_border">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-xl-6 col-md-6">
+                                <div class="Query_text">
+                                    <p>Need help planning your trip?</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="phone_num">
+                                    <a href="contact.html" class="mobile_no">Contact our team</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">Contact</h3>
+                            <p class="footer_text">Get in touch for help with your travel plans.</p>
+                            <a href="contact.html" class="line-button">Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">Traveler Support</h3>
+                            <p class="footer_text">Email: support@example.com<br>Phone: +1 000 000 0000</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-6 col-lg-2">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">Navigation</h3>
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="packages.html">Packages</a></li>
+                                <li><a href="destinations.html">Destinations</a></li>
+                                <li><a href="user_dashboard.html">My Dashboard</a></li>
+                                <li><a href="admin_login.html" style="color: #ff4d4d; font-weight: bold;">Admin Login</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="copy-right_text">
+            <div class="container">
+                <div class="footer_border"></div>
+                <div class="row">
+                    <div class="col-xl-8 col-md-7 col-lg-9">
+                        <p class="copy_right">
+                            Copyright &copy; <script>document.write(new Date().getFullYear());</script>
+                            All rights reserved.
+                        </p>
+                    </div>
+                    <div class="col-xl-4 col-md-5 col-lg-3">
+                        <div class="socail_links">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/nice-select.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const user = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user'));
+    const loggedOutView = document.getElementById('logged-out-view');
+    const loggedInView = document.getElementById('logged-in-view');
+    const navUsername = document.getElementById('nav-username');
+
+    if (user && loggedOutView && loggedInView) {
+        loggedOutView.style.display = 'none';
+        loggedInView.style.display = 'flex';
+        if (navUsername) navUsername.textContent = user.username || user.full_name || 'User';
+    } else if (loggedOutView && loggedInView) {
+        loggedOutView.style.display = 'block';
+        loggedOutView.style.display = 'flex'; // ensures flex layout matches
+        loggedInView.style.display = 'none';
+    }
+
+    // Logout handling
+    document.getElementById('logout-btn')?.addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('user');
+        window.location.reload();
+    });
+});
+</script>
+</body>
+</html>

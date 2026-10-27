@@ -216,7 +216,9 @@ app.put('/api/admin/packages/:id', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
+app.get('/user_dashboard.html', (req, res) => {
+    res.sendFile(__dirname + '/user_dashboard.html');
+});
 app.delete('/api/admin/packages/:id', async (req, res) => {
     try {
         const tripId = req.params.id;
